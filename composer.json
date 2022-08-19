@@ -1,0 +1,11 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "bramus/router": "~1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tuan\\Fixably\\": "src/"
+        }
+    }
+}
