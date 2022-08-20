@@ -10,11 +10,15 @@ $router->get('/', function() {
     echo 'Main Page';
 });
 
-$router->get('/orders/statistics', function() {
-    echo 'Order Page';
+//@TODO: Remove
+$router->get('/login', function() {
+    echo 'Get API token';
 });
 
-$router->get('/orders/iphone', function() {
+
+$router->get('/statistics', '\Tuan\Fixably\Controller\Order\Statistics@execute');
+
+$router->get('/iphones', function() {
     echo 'Order Iphone Page';
 });
 
@@ -22,8 +26,12 @@ $router->get('/invoices', function() {
     echo 'Invoices Page';
 });
 
-$router->post('/orders/create', function() {
-    echo 'New order';
+$router->get('/new', function() {
+    echo 'New Order Page';
+});
+
+$router->post('/save', function() {
+    echo 'New Order Save';
 });
  
 $router->run();
