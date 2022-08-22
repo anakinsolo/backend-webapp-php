@@ -2,18 +2,25 @@
 
 namespace Tuan\Fixably\Controller;
 
+use GuzzleHttp\Utils;
+use Tuan\Fixably\Http\Service\HttpWrapper;
+
 class BaseController
 {
-    protected function buildFormData($data): array
-    {
-        $formData = [];
-        foreach ($data as $key => $value) {
-            $formData[] = [
-                'name' => $key,
-                'contents' => $value
-            ];
-        }
+    protected HttpWrapper $httpWrapper;
 
-        return $formData;
+    public function __construct(
+    ) {
+        $this->httpWrapper = new HttpWrapper();
+    }
+
+    public function getJsonResponse(array $data): string
+    {
+        return Utils::jsonEncode($data);
+    }
+
+    protected function getTotalPageNum($total): int
+    {
+        return (int)\ceil($total / 10);
     }
 }

@@ -1,35 +1,56 @@
 <?php
 
 namespace Tuan\Fixably\Http\Service;
+
 use GuzzleHttp\Client;
+use GuzzleHttp\Utils;
 
 class HttpWrapper
 {
+    /**
+     * @var string
+     */
     private $apiToken;
 
+    /**
+     * @var Client
+     */
     private $client;
 
-    public function getApiToken() 
+    /**
+     * @throws \Exception
+     */
+    private function getApiToken()
     {
         if (!$this->apiToken) {
             $client = $this->getClient();
-            $res = $client->request('POST', 'token', [
-                'multipart' => [
-                    [
-                        'name' => 'Code',
-                        'contents' => '1234',
-                        'headers' => $this->getRequestHeaders(),
-                    ]
-                ]
-            ]);
-            $this->apiToken = $res->getBody();
-            var_dump((string)$this->apiToken);die;
+
+            try {
+                $res = $client->request('POST', 'token', [
+                    'multipart' => $this->buildFormData([
+                        'Code' => 64941463 //@TODO: Move to somewhere else
+                    ])
+                ]);
+            } catch (\Throwable $exception) {
+                throw new \Exception('Failed to fetch API token ' . $exception->getMessage());
+            }
+
+            if ($res->getStatusCode() !== 200) {
+                throw new \Exception('Failed to fetch API token ' . (string)$res->getBody());
+            }
+
+            try {
+                $resJson = Utils::jsonDecode($res->getBody(), true);
+                $this->apiToken = $resJson['token'];
+            } catch (\throwable $exception) {
+                throw new \Exception('Failed to fetch API token ' . $exception->getMessage() . ' ' . $res->getBody());
+            }
         }
 
         return $this->apiToken;
     }
 
-    private function getClient() 
+    private function getClient(): Client
     {
         if (!$this->client) {
             $this->client = new Client([
@@ -40,48 +61,69 @@ class HttpWrapper
         return $this->client;
     }
 
-    private function getBaseURI() 
+    private function getBaseURI(): string
     {
         return 'https://careers-api.fixably.com/';
     }
 
-    private function getRequestHeaders() 
+    private function getOptions(): array
     {
         return [
-            'Content-Type' => 'multipart/form-data',
-        ];
-    }
-
-    private function getOptions()
-    {
-        $header = $this->getRequestHeaders();
-        $header['X-Fixably-Token'] = $this->getApiToken();
-
-        return [
-            'headers' => $header,
+            'headers' => [
+                'X-Fixably-Token' => $this->getApiToken(),
+            ],
             'multipart' => [],
         ];
     }
 
-    public function get($endpoint)
+    /**
+     * @throws \Exception
+     */
+    public function makeRequest(string $method, string $endpoint, array $data = [], array $pagination = [])
     {
         $client = $this->getClient();
+        if (!empty($pagination)) {
+            $endpoint .= '?' . \http_build_query($pagination);
+        }
 
-        $response = $client->request('GET', $endpoint, $this->getOptions());
-        return $response->getBody();
+        $options = $this->getOptions();
+        if ($method === 'POST') {
+            if (!empty($data)) {
+                $formData = $this->buildFormData($data);
+                $options['multipart'] = $formData;
+            }
+        }
+
+        try {
+            $res = $client->request($method, $endpoint, $options);
+        } catch (\Throwable $e) {
+            throw new \Exception('Failed to fetch data from API ' . $e->getMessage());
+        }
+
+        try {
+            $resData = Utils::jsonDecode($res->getBody(), true);
+        } catch (\Throwable $e) {
+            throw new \Exception('Failed to decode response data ' . $e->getMessage() . ' ' . $res->getBody());
+        }
+
+        if ($res->getStatusCode() !== 200) {
+            throw new \Exception('Failed to get response ' . $resData);
+        }
+
+        return $resData;
     }
 
-    public function post($endpoint, $data)
+    private function buildFormData($data): array
     {
-        ini_set('xdebug.var_display_max_children', -1);
-        ini_set('xdebug.var_display_max_depth', -1);
-        $options = $this->getOptions();
-        $options['multipart'] = $data;
-        var_dump($options);
-        $client = $this->getClient();
+        $formData = [];
+        foreach ($data as $key => $value) {
+            $formData[] = [
+                'name' => $key,
+                'contents' => $value
+            ];
+        }
 
-        $response = $client->request('POST', $endpoint, $options);
-        return (string)$response->getBody();
+        return $formData;
     }
 
 }

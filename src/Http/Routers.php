@@ -18,20 +18,12 @@ $router->get('/login', function() {
 
 $router->get('/statistics', '\Tuan\Fixably\Controller\Order\Statistics@execute');
 
-$router->get('/iphones', function() {
-    echo 'Order Iphone Page';
-});
+$router->get('/iphones', '\Tuan\Fixably\Controller\Order\Iphone@execute');
 
-$router->get('/invoices', function() {
-    echo 'Invoices Page';
-});
+$router->get('/invoices', '\Tuan\Fixably\Controller\Invoice@execute');
 
-$router->get('/new', function() {
-    echo 'New Order Page';
-});
+$router->get('/new', '\Tuan\Fixably\Controller\Order\Edit@execute');
 
-$router->post('/save', function() {
-    echo 'New Order Save';
-});
+$router->post('/save', '\Tuan\Fixably\Controller\Order\Save@execute');
  
 $router->run();
