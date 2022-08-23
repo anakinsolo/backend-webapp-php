@@ -28,7 +28,7 @@ class Invoice extends BaseController
                 );
             } catch (\Exception $exception) {
                 $result[$startDate . ' - ' . $endDate] = [
-                    'Error' => $exception->getMessage()
+                    'error' => $exception->getMessage()
                 ];
                 continue;
             }
@@ -47,7 +47,7 @@ class Invoice extends BaseController
                     } catch (\Exception $exception) {
                         if ($pageNum === $maxPage) {
                             $result[$startDate . ' - ' . $endDate] = [
-                                'Error' => $exception->getMessage()
+                                'error' => $exception->getMessage()
                             ];
                             break;
                         }

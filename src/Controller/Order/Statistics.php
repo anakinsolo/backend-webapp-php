@@ -64,7 +64,7 @@ class Statistics extends BaseController
         try {
             $statuses = $this->httpWrapper->makeRequest('GET', 'statuses', [], []);
         } catch (\Exception $exception) {
-            return ['error' => $exception];
+            return ['error' => $exception->getMessage()];
         }
 
         foreach ($statuses as $status) {
