@@ -3,6 +3,9 @@
         "guzzlehttp/guzzle": "^7.0",
         "bramus/router": "~1.6"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
     "autoload": {
         "psr-4": {
             "Tuan\\Fixably\\": "src/"

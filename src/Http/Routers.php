@@ -6,8 +6,7 @@ use Bramus\Router\Router;
 
 $router = new Router();
 
-$router->get('/', '\Tuan\Fixably\Controller\Index@execute');
-
+$router->get('/', function () { header('Location: index.html'); });
 
 $router->get('/statistics', '\Tuan\Fixably\Controller\Order\Statistics@execute');
 
