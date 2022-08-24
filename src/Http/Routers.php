@@ -6,14 +6,7 @@ use Bramus\Router\Router;
 
 $router = new Router();
 
-$router->get('/', function() {
-    echo 'Main Page';
-});
-
-//@TODO: Remove
-$router->get('/login', function() {
-    echo 'Get API token';
-});
+$router->get('/', '\Tuan\Fixably\Controller\Index@execute');
 
 
 $router->get('/statistics', '\Tuan\Fixably\Controller\Order\Statistics@execute');

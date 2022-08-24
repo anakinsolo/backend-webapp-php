@@ -5,7 +5,7 @@ namespace Tuan\Fixably\Controller;
 use GuzzleHttp\Utils;
 use Tuan\Fixably\Http\Service\HttpWrapper;
 
-class BaseController
+abstract class BaseController
 {
     protected HttpWrapper $httpWrapper;
 
@@ -23,4 +23,6 @@ class BaseController
     {
         return (int)\ceil($total / 10);
     }
+
+    abstract public function execute();
 }

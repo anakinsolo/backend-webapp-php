@@ -5,6 +5,7 @@ use Tuan\Fixably\Controller\BaseController;
 
 class Save extends BaseController
 {
+    /** @var bool */
     private $isSampleOrder;
 
     public function execute()
@@ -51,7 +52,7 @@ class Save extends BaseController
         return $order;
     }
 
-    private function createNewOrderNote($id)
+    private function createNewOrderNote($id): array
     {
         $data = [
             'Type' => 'Issue',
