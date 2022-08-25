@@ -16,8 +16,17 @@ Or this project can be run with php server
 
 ## Installation
 - Clone this repo
-- (For Docker, otherwise skip this step) Run `docker compose up -d` to start the project
-- Run `composer install` command to install dependencies
+- Make a copy of `.env.example` to `.env`. Put the access code to the `API_CODE`
+- Choose either docker or non docker
+
+### For docker
+- Run `docker compose up -d`
+- Run `docker compose exect php composer install` to install dependencies
+- Run `docker inspect <web_container_name>` and write down the IP address of the <web_container_name>
+- Access the site using the IP address above
+
+### For non docker
+- Run `composer install`
 - Run php server `php -S 127.0.0.1:9002 -t`
 - Open [http://127.0.0.1:9002](http://127.0.0.1:9002) to view it in your browser.
 
