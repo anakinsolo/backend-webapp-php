@@ -30,7 +30,7 @@ class Iphone extends AbstractDataProvider
         }
 
         if (isset($firstData['total'])) {
-            while ($pageNum <= $maxPage = $this->getTotalPageNum($firstData['total'])) {
+            while ($pageNum <= $maxPage = $this->getTotalPageNum((int)$firstData['total'])) {
                 try {
                     $orderData = $this->httpWrapper->makeRequest(
                         'POST',

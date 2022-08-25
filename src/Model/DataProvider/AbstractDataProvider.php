@@ -14,7 +14,7 @@ abstract class AbstractDataProvider
 
     abstract public function getData(): array;
 
-    protected function getTotalPageNum($total): int
+    protected function getTotalPageNum(int $total): int
     {
         return (int)\ceil($total / 10);
     }

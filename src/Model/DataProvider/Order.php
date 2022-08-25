@@ -34,7 +34,7 @@ class Order extends AbstractDataProvider
     }
 
 
-    private function getOrderData($result): array
+    private function getOrderData(array $result): array
     {
         $pageNum = 1;
 
@@ -45,7 +45,7 @@ class Order extends AbstractDataProvider
         }
 
         if ($firstOrderData['total']) {
-            while ($pageNum <= $maxPage = $this->getTotalPageNum($firstOrderData['total'])) {
+            while ($pageNum <= $maxPage = $this->getTotalPageNum((int)$firstOrderData['total'])) {
                 try {
                     $orderData = $this->httpWrapper->makeRequest('GET', 'orders', [], ['page' => $pageNum]);
                 } catch (\Exception $exception) {
@@ -120,7 +120,7 @@ class Order extends AbstractDataProvider
         return $order;
     }
 
-    public function createNewOrderNote($id, $isSample = false): array
+    public function createNewOrderNote(int $id, $isSample = false): array
     {
         $data = [
             'Type' => 'Issue',

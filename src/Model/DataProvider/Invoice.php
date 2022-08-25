@@ -34,7 +34,7 @@ class Invoice extends AbstractDataProvider
 
             if (isset($firstData['total'])) {
                 $totalInvoices = $firstData['total'];
-                while ($pageNum <= $maxPage = $this->getTotalPageNum($firstData['total'])) {
+                while ($pageNum <= $maxPage = $this->getTotalPageNum((int)$firstData['total'])) {
                     try {
                         $invoiceData = $this->httpWrapper->makeRequest(
                             'POST',
@@ -74,7 +74,7 @@ class Invoice extends AbstractDataProvider
         return $result;
     }
 
-    private function getChanges($data): array
+    private function getChanges(array $data): array
     {
         $result = [];
         $result[0] = $data[0];
@@ -101,7 +101,7 @@ class Invoice extends AbstractDataProvider
         return $result;
     }
 
-    private function getInvoiceChanged($curr, $prev): float
+    private function getInvoiceChanged(array $curr, array $prev): float
     {
         if ($curr['total_invoices'] > $prev['total_invoices']) {
             $totalInvoicesChanged = ($curr['total_invoices'] - $prev['total_invoices']) / $curr['total_invoices'] * 100;
@@ -114,7 +114,7 @@ class Invoice extends AbstractDataProvider
         return \round($totalInvoicesChanged, 1);
     }
 
-    private function getInvoiceAmountChanged($curr, $prev): float
+    private function getInvoiceAmountChanged(array $curr, array $prev): float
     {
         if ($curr['total_invoiced_amount'] > $prev['total_invoiced_amount']) {
             $totalInvoicesChanged = ($curr['total_invoiced_amount'] - $prev['total_invoiced_amount']) / $curr['total_invoiced_amount'] * 100;

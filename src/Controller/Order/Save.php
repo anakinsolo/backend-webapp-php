@@ -29,12 +29,12 @@ class Save extends BaseController
 
         $order = $this->dataProvider->createNewOrder($postData, $this->getIsSampleOrder());
         if (isset($order['id'])) {
-            $res = $this->dataProvider->createNewOrderNote($order['id'], true);
+            $res = $this->dataProvider->createNewOrderNote((int)$order['id'], true);
             echo $this->getJsonResponse($res);
         }
     }
 
-    private function getIsSampleOrder()
+    private function getIsSampleOrder(): bool
     {
         if (!$this->isSampleOrder) {
             $this->isSampleOrder = $_POST['is_sample_order'] ?? null;

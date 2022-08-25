@@ -20,7 +20,7 @@ class HttpWrapper
     /**
      * @throws \Exception
      */
-    private function getApiToken()
+    private function getApiToken(): int
     {
         if (!$this->apiToken) {
             $client = $this->getClient();
@@ -41,8 +41,8 @@ class HttpWrapper
 
             try {
                 $resJson = Utils::jsonDecode($res->getBody(), true);
-                $this->apiToken = $resJson['token'];
-            } catch (\throwable $exception) {
+                $this->apiToken = (int)$resJson['token'];
+            } catch (\Throwable $exception) {
                 throw new \Exception('Failed to fetch API token ' . $exception->getMessage() . ' ' . $res->getBody());
             }
         }
@@ -113,7 +113,7 @@ class HttpWrapper
         return $resData;
     }
 
-    private function buildFormData($data): array
+    private function buildFormData(array $data): array
     {
         $formData = [];
         foreach ($data as $key => $value) {
