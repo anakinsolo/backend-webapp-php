@@ -17,6 +17,7 @@ class Save extends BaseController
     public function execute()
     {
         $postData = $_POST;
+
         if (!isset($postData['is_sample_order']) && (!($postData['manu'])
             || !($postData['brand'])
             || !($postData['type'])

@@ -16,8 +16,23 @@ class Order extends AbstractDataProvider
             return ['error' => 'Failed to get order statuses'];
         }
 
-        return $this->getOrderData($statuses);
+        $result = $this->getOrderData($statuses);
+        return $this->sortResult($result);
     }
+
+    private function sortResult(array $result): array
+    {
+        \usort($result, function(array $firstEle, array $secondEle) {
+            if ($firstEle['count'] === $secondEle['count']) {
+                return 0;
+            }
+
+            return ($firstEle['count'] > $secondEle['count']) ? -1 : 1;
+        });
+
+        return $result;
+    }
+
 
     private function getOrderData($result): array
     {
@@ -52,7 +67,7 @@ class Order extends AbstractDataProvider
             }
         }
 
-        return $result;
+        return \array_values($result);
     }
 
     private function getStatusData(): array
@@ -67,6 +82,7 @@ class Order extends AbstractDataProvider
 
         foreach ($statuses as $status) {
             $result[$status['id']] = [
+                'id' => $status['id'],
                 'description' => $status['description'],
                 'count' => 0,
             ];
