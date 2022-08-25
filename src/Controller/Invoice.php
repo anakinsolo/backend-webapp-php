@@ -2,7 +2,7 @@
 
 namespace Tuan\Fixably\Controller;
 
-use Tuan\Fixably\Model\InvoiceDataProvider;
+use Tuan\Fixably\Model\DataProvider\Invoice as InvoiceDataProvider;
 
 class Invoice extends BaseController
 {

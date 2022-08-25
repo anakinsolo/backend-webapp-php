@@ -1,19 +1,19 @@
 <?php
-namespace Tuan\Fixably\Test;
+namespace DataProvider;
 use PHPUnit\Framework\TestCase;
-use Tuan\Fixably\Model\OrderDataProvider;
+use Tuan\Fixably\Model\DataProvider\Order;
 
-class OrderDataProviderTest extends TestCase
+class OrderTest extends TestCase
 {
     public function testGetData()
     {
-        $orderDataProvider = new OrderDataProvider();
+        $orderDataProvider = new Order();
         $this->assertIsArray($orderDataProvider->getData());
     }
 
     public function testCreateNewOrder()
     {
-        $orderDataProvider = new OrderDataProvider();
+        $orderDataProvider = new Order();
         $order = $orderDataProvider->createNewOrder([], true);
         $this->assertIsArray($order);
         $this->assertArrayHasKey('id', $order);
@@ -22,7 +22,7 @@ class OrderDataProviderTest extends TestCase
 
     public function testCreateNewOrderNote()
     {
-        $orderDataProvider = new OrderDataProvider();
+        $orderDataProvider = new Order();
         $order = $orderDataProvider->createNewOrder([], true);
         $note = $orderDataProvider->createNewOrderNote($order['id'], true);
         $this->assertIsArray($note);

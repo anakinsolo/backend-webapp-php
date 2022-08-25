@@ -1,7 +1,7 @@
 <?php
-namespace Tuan\Fixably\Model;
+namespace Tuan\Fixably\Model\DataProvider;
 
-class InvoiceDataProvider extends AbstractDataProvider
+class Invoice extends AbstractDataProvider
 {
     public function getData(): array
     {

@@ -3,7 +3,7 @@
 namespace Tuan\Fixably\Controller\Order;
 
 use Tuan\Fixably\Controller\BaseController;
-use Tuan\Fixably\Model\IphoneDataProvider;
+use Tuan\Fixably\Model\DataProvider\Iphone as IphoneDataProvider;
 
 class Iphone extends BaseController
 {

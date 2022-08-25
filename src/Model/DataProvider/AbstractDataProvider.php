@@ -1,5 +1,5 @@
 <?php
-namespace Tuan\Fixably\Model;
+namespace Tuan\Fixably\Model\DataProvider;
 
 use Tuan\Fixably\Http\Service\HttpWrapper;
 

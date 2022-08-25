@@ -10,7 +10,7 @@ class HttpWrapper
     /**
      * @var string
      */
-    private $apiToken;
+    private string $apiToken = '';
 
     /**
      * @var Client
@@ -28,7 +28,7 @@ class HttpWrapper
             try {
                 $res = $client->request('POST', 'token', [
                     'multipart' => $this->buildFormData([
-                        'Code' => 64941463 //@TODO: Move to somewhere else
+                        'Code' => $_ENV['API_CODE']
                     ])
                 ]);
             } catch (\Throwable $exception) {
@@ -63,7 +63,7 @@ class HttpWrapper
 
     private function getBaseURI(): string
     {
-        return 'https://careers-api.fixably.com/';
+        return $_ENV['BASE_URI'];
     }
 
     private function getOptions(): array

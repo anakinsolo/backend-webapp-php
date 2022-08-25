@@ -6,6 +6,9 @@ This project can be run with docker. There are 2 containers
 - php:8.1-fpm
 - nginx
 
+Or this project can be run with php server
+- PHP 8.1
+
 ## Before installing 
 - (For Docker) Make sure you have docker engine and docker compose v2 installed on your local
 - Have composer installed on your local
@@ -28,5 +31,5 @@ This will get a list of iphone orders that have assigned technician
 ### /invoices
 This will return the total invoices, total invoice amount for each unique week of November 2020, and the changes between them
 
-### /new
-This will redirect to a form, where you can create an order with a description. Or use sample request to create an order for a MacBook Pro with a broken screen
+### /
+Homepage, this contains a form to create new order with a description for defect

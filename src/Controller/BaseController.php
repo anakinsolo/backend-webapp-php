@@ -3,7 +3,7 @@
 namespace Tuan\Fixably\Controller;
 
 use GuzzleHttp\Utils;
-use Tuan\Fixably\Model\AbstractDataProvider;
+use Tuan\Fixably\Model\DataProvider\AbstractDataProvider;
 
 abstract class BaseController
 {
