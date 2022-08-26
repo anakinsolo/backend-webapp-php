@@ -20,7 +20,7 @@ class HttpWrapper
     /**
      * @throws \Exception
      */
-    private function getApiToken(): int
+    private function getApiToken(): string
     {
         if (!$this->apiToken) {
             $client = $this->getClient();
@@ -41,7 +41,7 @@ class HttpWrapper
 
             try {
                 $resJson = Utils::jsonDecode($res->getBody(), true);
-                $this->apiToken = (int)$resJson['token'];
+                $this->apiToken = $resJson['token'];
             } catch (\Throwable $exception) {
                 throw new \Exception('Failed to fetch API token ' . $exception->getMessage() . ' ' . $res->getBody());
             }
